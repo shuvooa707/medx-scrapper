@@ -75,8 +75,15 @@ async function scrapbrand(serial=1) {
     let manufacturer_name = $(elem).text().trim();
     elem = $('.brand-header div[title="Manufactured by"] a').first();
     let manufacturer_link = $(elem).attr("href");
-    elem = $('.package-container span span').first();
-    let price = $(elem)?.text()?.trim();
+    elem = $('.package-container span:nth-child(2)').first();
+    let price = ($(elem)?.text()?.trim())?.match(/\d+\.\d+/ig);
+    if( price && price.length ) {
+        price = price[0];
+    } else {
+        price = 0;
+    }
+    
+    
     let indications = $('#indications')?.next()?.text().trim();
     let composition = $('#composition')?.next()?.text().trim();
     let pharmacology = $('#mode_of_action')?.next()?.text().trim();
